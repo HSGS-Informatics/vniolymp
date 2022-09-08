@@ -44,6 +44,45 @@ $1 \le a, b \le 10^9$.
 \end{statement}
 ```
 
+Nếu muốn thêm sample input/output, có 3 cách sau:
+
+Lưu ý, sau mỗi bộ `\exmp` hãy thêm 1 dấu `%` vào để báo hiệu là đã kết thúc 1 bộ sample.
+
+```latex
+% example để thêm example 2 cột input/output
+\begin{example}
+\exmp{
+Input
+}{
+Output
+}%
+\exmpfile{tên file sample input}{tên file sample output}%
+\end{example}
+
+% examplewide là 2 dòng riêng biệt input/output, sử dụng nếu sample dài hoặc to
+\begin{examplewide}
+\exmp{
+Input
+}{
+Output
+}%
+\exmpfile{tên file sample input}{tên file sample output}%
+\end{examplewide}
+
+% examplethree là 1 bộ example có 3 cột input/output/giải thích
+\begin{examplethree}
+\exmp{
+Input
+}{
+Output
+}{
+Giải thích
+}
+%
+\exmpfile{tên file sample input}{tên file sample output}{giải thích%
+\end{examplethree}
+```
+
 Trong khi viết đề, nếu bạn muốn viết giới hạn, subtask, ví dụ, thì cũng rất đơn giản:
 
 ```latex
