@@ -1,2 +1,6 @@
 # vniolymp
-The Vietnamese version of https://github.com/GassaFM/olymp.sty
+
+A small LaTeX package which makes writing competitive programming problem statements in Vietnamese simple and versatile. 
+
+It heavily relies on XeLaTeX, please use this compiler when using this package.
+

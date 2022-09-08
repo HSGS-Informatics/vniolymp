@@ -1,0 +1,209 @@
+% vniolymp.sty version 1.0
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vniolymp}
+
+\RequirePackage{standalone}
+\RequirePackage{import}
+\RequirePackage{microtype}
+\RequirePackage{verbatim}
+\RequirePackage{polyglossia}
+\RequirePackage{mathtools}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+\RequirePackage{url}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newlength{\thelinewidth}
+\thelinewidth=\textwidth
+
+% -- End of setup margins --
+
+% -- Setup sizes --
+\newlength{\exmpwidinf}
+\newlength{\exmpwidouf}
+
+\exmpwidinf=0.45\thelinewidth
+\exmpwidouf=0.45\thelinewidth
+
+\newlength{\afterproblemhead}
+\newlength{\afterconstraints}
+
+\parindent=0mm
+\parskip=1ex
+
+% -- End of setup sizes --
+
+% -- Setup keywords --
+\def\kw@ProblemOrigin{Nguồn:}
+\def\kw@Editorialist{Chữa bài: }
+\def\kw@Specification{Chi tiết cài đặt}
+\def\kw@Interaction{Tương tác với máy chấm}
+\def\kw@Input{Input}
+\def\kw@Output{Output}
+\def\kw@Example{Ví dụ}
+\def\kw@Examples{Ví dụ}
+\def\kw@Explanation{Giải thích}
+\def\kw@Explanations{Giải thích}
+\def\kw@Illustration{Minh hoạ}
+\def\kw@Scoring{Chấm điểm}
+\def\kw@Notes{Lưu ý}
+\def\kw@Constraints{Giới hạn}
+\def\kw@defaultinputname{Sample Input}
+\def\kw@defaultoutputname{Sample Output}
+\def\kw@notstated{không rõ}
+
+\afterproblemhead=3mm
+\afterconstraints=2mm
+
+\newcommand{\problemheadfont}{\LARGE}
+\newcommand{\problemsectionfont}{\Large}
+\newcommand{\problemend}{
+\clearpage
+}
+\newcommand{\information}{\footnotesize}
+\newcommand{\problemtextfont}{\normalsize}
+\newcommand{\beforeproblemsectioncaption}{\smallbreak\smallskip}
+\newcommand{\afterproblemsectioncaption}{\smallskip}
+% -- Hết phần cài đặt tham số --
+
+% -- Problem sections --
+
+\newcommand{\createsection}{\@newsection}
+
+\def\@newsection#1#2{\DeclareRobustCommand{#1}{
+{\beforeproblemsectioncaption\noindent
+\textsf{\textbf{#2}}}
+\nopagebreak\par\afterproblemsectioncaption}
+}
+
+\createsection{\Specification}{\kw@Specification}
+\createsection{\Interaction}{\kw@Interaction}
+\createsection{\InputFile}{\kw@Input}
+\createsection{\OutputFile}{\kw@Output}
+\createsection{\Example}{\kw@Example}
+\createsection{\Examples}{\kw@Examples}
+\createsection{\Explanation}{\kw@Explanation}
+\createsection{\Explanations}{\kw@Explanations}
+\createsection{\Illustration}{\kw@Illustration}
+\createsection{\Scoring}{\kw@Scoring}
+\createsection{\Notes}{\kw@Notes}
+\createsection{\Constraints}{\kw@Constraints}
+
+% -- End of problem sections
+
+% -- Problem environment --
+
+\def\defaultproblemauthor{\textit{\kw@notstated}}
+\gdef\thisproblemauthor{\defaultproblemauthor}
+\def\defaultproblemdeveloper{\textit{\kw@notstated}}
+\gdef\thisproblemdeveloper{\defaultproblemdeveloper}
+\def\defaultproblemorigin{\textit{\kw@notstated}}
+\gdef\thisproblemorigin{\defaultproblemorigin}
+
+\newif\ifdisplayauthor
+\newif\ifdisplaydeveloper
+\newif\ifdisplayorigin
+\newif\ifrevisionsignature
+\newif\ifdisplayauthorinfooter
+\newif\ifdisplaydeveloperinfooter
+
+\newenvironment{tutorial}[2]{
+    \@startsection{section}%
+    {1}
+    {0pt}
+    {-2.5ex plus -1ex minus -.2ex}% beforeskip
+    {0.5ex plus.2ex}% afterskip
+    {\normalfont\problemheadfont\textbf}%
+    {#1}%
+    \nopagebreak%
+    \par\vspace{\afterproblemhead}%
+    \problemtextfont\parindent=0pt%
+    {\textit{\textbf{\kw@Editorialist} #2}}
+    \nopagebreak
+    \par\vspace{\afterconstraints}
+    \problemtextfont
+}
+
+\newenvironment{problem}[5]{
+    \@startsection{section}%
+    {1}% level
+    {0pt}% indent
+    {-2.5ex plus -1ex minus -.2ex}% beforeskip
+    {0.5ex plus.2ex}% afterskip
+    {\normalfont\problemheadfont\textbf}
+    {#1}
+    {#2 | #3 | \texttt{#4} | \texttt{#5}}
+    \nopagebreak%
+    \par\vspace{\afterproblemhead}%
+    \problemtextfont\parindent=0pt%
+    \nopagebreak
+    \par\vspace{\afterconstraints}
+    \problemtextfont
+    \newcommand{\InputFileName}{\ifx\relax#4\relax{\kw@defaultinputname}\else{#4}\fi}
+    \newcommand{\OutputFileName}{\ifx\relax#5\relax{\kw@defaultoutputname}\else{#5}\fi}
+}{
+}
+
+\newenvironment{statement}[5]{
+    {\normalfont\large\textbf{#1}}
+    \par\vspace{1mm}%
+    {#2 | #3 | \texttt{#4} | \texttt{#5}}
+    \nopagebreak%
+    \par\vspace{0.5mm}%
+    \problemtextfont\parindent=0pt%
+    \nopagebreak
+    \par\vspace{\afterconstraints}
+    \problemtextfont\itshape
+    \newcommand{\InputFileName}{\ifx\relax#4\relax{\kw@defaultinputname}\else{#4}\fi}
+    \newcommand{\OutputFileName}{\ifx\relax#5\relax{\kw@defaultoutputname}\else{#5}\fi}
+}{
+}
+
+\def\s@tm@cr@s{
+    \def\widthin##1{\exmpwidinf=##1\relax}
+    \def\widthout##1{\exmpwidouf=##1\relax}
+    \def\stretchin##1{\advance\exmpwidinf by ##1\relax}
+    \def\stretchout##1{\advance\exmpwidouf by ##1\relax}
+    \@ifstar{
+        \error Star must not be used in example environment any more
+    }
+}
+
+% This is magic, which delete space after verbatiminput
+\addto@hook{\every@verbatim}{\topsep=0pt\relax}
+
+% :FIXME:
+\newenvironment{example}[1][]{
+    \s@tm@cr@s#1
+    \ttfamily\obeylines\obeyspaces\frenchspacing
+    \newcommand{\exmp}[2]{
+        \begin{minipage}[t]{\exmpwidinf}\rightskip=0pt plus 1fill\relax##1\medskip\end{minipage}&
+        \begin{minipage}[t]{\exmpwidouf}\rightskip=0pt plus 1fill\relax##2\medskip\end{minipage}\\
+        \hline
+    }
+    \begin{tabular}{|l|l|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{\texttt{\InputFileName}}}&
+        \multicolumn{1}{|c|}{\textbf{\texttt{\OutputFileName}}}\\
+        \hline
+}{
+    \end{tabular}
+}
+
+% -- End of problem environment --
+
+% -- Declare "shortitems" and "shortnums" environment: it's a "compact itemize" --
+\def\shortitems{\vspace{-3mmplus2mm}\itemize\itemsep-1.618mmplus0.5mm\relax}%
+\def\endshortitems{\vspace{-3mmplus2mm}\enditemize}%
+\def\shortnums{\vspace{-3mmplus2mm}\enumerate\itemsep-1.618mmplus0.5mm\relax}%
+\def\endshortnums{\vspace{-3mmplus2mm}\endenumerate}%
+ 
+\headheight=2cm
+\headsep=6mm
+
+\hfuzz=0.5pt
+
+\sloppy
