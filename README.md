@@ -73,4 +73,4 @@ Nếu muốn viết lời giải, hãy làm như sau:
 Chữa bài vào đây
 
 \end{tutorial}
-```latex
+```
