@@ -2,7 +2,9 @@
 
 Một gói LaTeX nhỏ, ổn định và tiện dụng để viết đề bài lập trình thi đấu. 
 
-Gói này phụ thuộc nhiều vào trình dịch XeLaTeX, vì vậy hãy sử dụng trình dịch này nếu bạn dịch trên máy tính cá nhân, hoặc sử dụng Overleaf để đạt hiệu quả tốt nhất.
+Gói này phụ thuộc nhiều vào trình dịch XeLaTeX, vì vậy hãy chỉnh trình dịch thành XeLaTeX nếu bạn dịch trên máy tính cá nhân, hoặc sử dụng Overleaf để đạt hiệu quả tốt nhất.
+
+Hãy gửi issue nếu bạn có bất cứ ý kiến, đóng góp hoặc phản hồi. Cảm ơn bạn đã sử dụng vniolymp!
 
 ## Các tính năng chính
 
@@ -10,6 +12,7 @@ Viết đề bài trong kì thi trở nên dễ dàng, tiện lợi và đẹp:
 
 ```latex
 % problem là môi trường để viết đề cho contest, có đánh số thứ tự, ghi mục lục, etc
+% Lưu ý thêm tên đề, giới hạn thời gian, bộ nhớ, input output theo thứ tự như ở đây
 \begin{problem}{A + B}{1s}{512 MiB}{stdin}{stdout}
 Cho 2 số nguyên dương $a$ và $b$. Hãy tính tổng $a + b$.
 
@@ -61,3 +64,13 @@ Viết lưu ý nếu có
 
 Minh hoạ nếu có
 ```
+
+Nếu muốn viết lời giải, hãy làm như sau:
+
+```latex
+\begin{tutorial}{A + B}{Tên người chữa}
+
+Chữa bài vào đây
+
+\end{tutorial}
+```latex
