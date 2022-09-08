@@ -1,4 +1,7 @@
-% vniolymp.sty version 1.0
+% vniolymp.sty version 1.1
+% Changelog:
+% 1.0: Initial release
+% 1.1: Added examplewide, examplethree
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{vniolymp}
@@ -24,9 +27,19 @@
 % -- Setup sizes --
 \newlength{\exmpwidinf}
 \newlength{\exmpwidouf}
+\newlength{\exmpwidewid}
+\newlength{\exmpthreewidinf}
+\newlength{\exmpthreewidouf}
+\newlength{\exmpthreewidnote}
 
-\exmpwidinf=0.45\thelinewidth
-\exmpwidouf=0.45\thelinewidth
+\newif\ifintentionallyblankpages
+
+\exmpwidinf=0.43\thelinewidth
+\exmpwidouf=0.43\thelinewidth
+\exmpwidewid=0.9\thelinewidth
+\exmpthreewidinf=0.28\thelinewidth
+\exmpthreewidouf=0.28\thelinewidth
+\exmpthreewidnote=0.30\thelinewidth
 
 \newlength{\afterproblemhead}
 \newlength{\afterconstraints}
@@ -47,6 +60,7 @@
 \def\kw@Examples{Ví dụ}
 \def\kw@Explanation{Giải thích}
 \def\kw@Explanations{Giải thích}
+\def\kwExampleNotes{Giải thích}
 \def\kw@Illustration{Minh hoạ}
 \def\kw@Scoring{Chấm điểm}
 \def\kw@Notes{Lưu ý}
@@ -96,20 +110,6 @@
 
 % -- Problem environment --
 
-\def\defaultproblemauthor{\textit{\kw@notstated}}
-\gdef\thisproblemauthor{\defaultproblemauthor}
-\def\defaultproblemdeveloper{\textit{\kw@notstated}}
-\gdef\thisproblemdeveloper{\defaultproblemdeveloper}
-\def\defaultproblemorigin{\textit{\kw@notstated}}
-\gdef\thisproblemorigin{\defaultproblemorigin}
-
-\newif\ifdisplayauthor
-\newif\ifdisplaydeveloper
-\newif\ifdisplayorigin
-\newif\ifrevisionsignature
-\newif\ifdisplayauthorinfooter
-\newif\ifdisplaydeveloperinfooter
-
 \newenvironment{tutorial}[2]{
     \@startsection{section}%
     {1}
@@ -156,7 +156,7 @@
     \problemtextfont\parindent=0pt%
     \nopagebreak
     \par\vspace{\afterconstraints}
-    \problemtextfont\itshape
+    \problemtextfont
     \newcommand{\InputFileName}{\ifx\relax#4\relax{\kw@defaultinputname}\else{#4}\fi}
     \newcommand{\OutputFileName}{\ifx\relax#5\relax{\kw@defaultoutputname}\else{#5}\fi}
 }{
@@ -184,6 +184,13 @@
         \begin{minipage}[t]{\exmpwidouf}\rightskip=0pt plus 1fill\relax##2\medskip\end{minipage}\\
         \hline
     }
+    \newcommand{\exmpfile}[2]{
+       \exmp{
+          \verbatiminput{##1}
+       }{
+          \verbatiminput{##2}
+       }%
+    }
     \begin{tabular}{|l|l|}
         \hline
         \multicolumn{1}{|c|}{\textbf{\texttt{\InputFileName}}}&
@@ -193,7 +200,79 @@
     \end{tabular}
 }
 
+\newenvironment{examplewide}[1][]{%
+    \s@tm@cr@s#1
+    \ttfamily\obeylines\obeyspaces\frenchspacing
+    \newcommand{\exmp}[2]{
+        \begin{tabular}{|c|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf\texttt{\InputFileName}}\\
+        \hline
+        \begin{minipage}[t]{\exmpwidewid}\rightskip=0pt plus 1fill\relax
+        ##1
+        \medskip\end{minipage}\\
+        \hline
+        \multicolumn{1}{|c|}{\textbf\texttt{\OutputFileName}}\\%
+        \hline
+        \begin{minipage}[t]{\exmpwidewid}\rightskip=0pt plus 1fill\relax
+        ##2    
+        \medskip\end{minipage}\\%
+        \hline
+        \end{tabular}
+    }
+    \newcommand{\exmpfile}[2]{
+       \exmp{
+          \verbatiminput{##1}
+       }{
+          \verbatiminput{##2}
+       }%
+    }
+}{
+}
+
+\newenvironment{examplethree}[1][]{
+    \s@tm@cr@s#1
+    \ttfamily\obeylines\obeyspaces\frenchspacing
+    \newcommand{\exmp}[3]{
+        \begin{minipage}[t]{\exmpthreewidinf}\rightskip=0pt plus 1fill\relax##1\medskip\end{minipage}&
+        \begin{minipage}[t]{\exmpthreewidouf}\rightskip=0pt plus 1fill\relax##2\medskip\end{minipage}&
+        \begin{minipage}[t]{\exmpthreewidnote}\rightskip=0pt plus 1fill\relax##3\medskip\end{minipage}\\
+        \hline
+    }
+
+    \newcommand{\exmpfile}[3]{
+       \exmp{
+          \verbatiminput{##1}
+       }{
+          \verbatiminput{##2}
+       }{
+          ##3
+       }%
+    }
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf\texttt{\InputFileName}}&
+        \multicolumn{1}{|c|}{\textbf\texttt{\OutputFileName}}&
+        \multicolumn{1}{|c|}{\textbf\texttt{\expandafter\unexpanded{\expandafter\kwExampleNotes}}}\\
+        \hline
+}{
+    \end{tabular}
+}
+
 % -- End of problem environment --
+
+\newcommand{\thecontestname}{Olympiad in Informatics}
+\newcommand{\thecontestlocation}{Somewhere}
+\newcommand{\thecontestdate}{Once upon a time}
+\newcommand{\therevision}{undefined}
+
+\DeclareRobustCommand{\contestname}{\thecontestname\par\thecontestlocation\unskip, \thecontestdate}
+
+\DeclareRobustCommand{\contest}[3]{
+    \renewcommand{\thecontestname}{#1}
+    \renewcommand{\thecontestlocation}{#2}
+    \renewcommand{\thecontestdate}{#3}
+}
 
 % -- Declare "shortitems" and "shortnums" environment: it's a "compact itemize" --
 \def\shortitems{\vspace{-3mmplus2mm}\itemize\itemsep-1.618mmplus0.5mm\relax}%
