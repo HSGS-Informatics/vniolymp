@@ -1,0 +1,26 @@
+{
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "Main",
+      "tools": [
+        "main"
+      ]
+    },
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "main",
+      "command": "latexmk",
+      "args": [
+        "--shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-lualatex",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    }
+  ],
+}
