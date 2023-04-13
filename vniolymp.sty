@@ -4,6 +4,7 @@
 \RequirePackage{microtype}
 \RequirePackage{verbatim}
 \RequirePackage{polyglossia}
+\RequirePackage{fullpage}
 
 \setdefaultlanguage{vietnamese}
 
@@ -38,10 +39,9 @@
 % -- End of setup sizes --
 
 % -- Setup keywords --
-\def\kw@ProblemOrigin{Nguồn:}
-\def\kw@Editorialist{Chữa bài: }
 \def\kw@Specification{Chi tiết cài đặt}
 \def\kw@Interaction{Tương tác với máy chấm}
+\def\kw@Editorialist{Chữa bài: }
 \def\kw@Input{Input}
 \def\kw@Output{Output}
 \def\kw@Example{Ví dụ}
@@ -56,7 +56,6 @@
 \def\kw@Constraints{Giới hạn}
 \def\kw@defaultinputname{Sample Input}
 \def\kw@defaultoutputname{Sample Output}
-\def\kw@notstated{không rõ}
 
 \afterproblemhead=3mm
 \afterconstraints=2mm
@@ -64,7 +63,7 @@
 \newcommand{\problemheadfont}{\LARGE}
 \newcommand{\problemsectionfont}{\Large}
 \newcommand{\problemend}{
-\clearpage
+    \clearpage
 }
 \newcommand{\information}{\footnotesize}
 \newcommand{\problemtextfont}{\normalsize}
@@ -77,9 +76,9 @@
 \newcommand{\createsection}{\@newsection}
 
 \def\@newsection#1#2{\DeclareRobustCommand{#1}{
-{\beforeproblemsectioncaption\noindent
-\textsf{\textbf{#2}}}
-\nopagebreak\par\afterproblemsectioncaption}
+        {\beforeproblemsectioncaption\noindent
+                \textsf{\textbf{#2}}}
+        \nopagebreak\par\afterproblemsectioncaption}
 }
 
 \createsection{\Specification}{\kw@Specification}
@@ -95,25 +94,31 @@
 \createsection{\Notes}{\kw@Notes}
 \createsection{\Constraints}{\kw@Constraints}
 
+\newcommand{\cpsec}[1]{
+    \beforeproblemsectioncaption\noindent
+    \textsf{\textbf{#1}}
+\nopagebreak\par\afterproblemsectioncaption
+}
+
 % -- End of problem sections
 
 % -- Problem environment --
 
 \newenvironment{tutorial}[2]{
-    \@startsection{section}%
-    {1}
-    {0pt}
-    {-2.5ex plus -1ex minus -.2ex}% beforeskip
-    {0.5ex plus.2ex}% afterskip
-    {\normalfont\problemheadfont\textbf}%
-    {#1}%
-    \nopagebreak%
-    \par\vspace{\afterproblemhead}%
-    \problemtextfont\parindent=0pt%
-    {\textit{\textbf{\kw@Editorialist} #2}}
-    \nopagebreak
-    \par\vspace{\afterconstraints}
-    \problemtextfont
+\@startsection{section}%
+{1}
+{0pt}
+{-2.5ex plus -1ex minus -.2ex}% beforeskip
+{0.5ex plus.2ex}% afterskip
+{\normalfont\problemheadfont\textbf}%
+{#1}%
+\nopagebreak%
+\par\vspace{\afterproblemhead}%
+\problemtextfont\parindent=0pt%
+{\textit{\textbf{\kw@Editorialist} #2}}
+\nopagebreak
+\par\vspace{\afterconstraints}
+\problemtextfont
 }
 
 \newenvironment{problem}[5]{
@@ -124,7 +129,7 @@
     {0.5ex plus.2ex}% afterskip
     {\normalfont\problemheadfont\textbf}
     {#1}
-    {#2 | #3 | \texttt{#4} | \texttt{#5}}
+    {\textbf{#2} | \textbf{#3} | \texttt{#4} | \texttt{#5}}
     \nopagebreak%
     \par\vspace{\afterproblemhead}%
     \problemtextfont\parindent=0pt%
@@ -139,7 +144,7 @@
 \newenvironment{statement}[5]{
     {\normalfont\large\textbf{#1}}
     \par\vspace{1mm}%
-    {#2 | #3 | \texttt{#4} | \texttt{#5}}
+    {\textbf{#2} | \textbf{#3} | \texttt{#4} | \texttt{#5}}
     \nopagebreak%
     \par\vspace{0.5mm}%
     \problemtextfont\parindent=0pt%
@@ -174,49 +179,19 @@
         \hline
     }
     \newcommand{\exmpfile}[2]{
-       \exmp{
-          \verbatiminput{##1}
-       }{
-          \verbatiminput{##2}
-       }%
+        \exmp{
+            \verbatiminput{##1}
+        }{
+            \verbatiminput{##2}
+        }%
     }
-    \begin{tabular}{|l|l|}
-        \hline
-        \multicolumn{1}{|c|}{\textbf{\texttt{\InputFileName}}}&
-        \multicolumn{1}{|c|}{\textbf{\texttt{\OutputFileName}}}\\
-        \hline
-}{
-    \end{tabular}
-}
-
-\newenvironment{examplewide}[1][]{%
-    \s@tm@cr@s#1
-    \ttfamily\obeylines\obeyspaces\frenchspacing
-    \newcommand{\exmp}[2]{
-        \begin{tabular}{|c|}
-        \hline
-        \multicolumn{1}{|c|}{\textbf\texttt{\InputFileName}}\\
-        \hline
-        \begin{minipage}[t]{\exmpwidewid}\rightskip=0pt plus 1fill\relax
-        ##1
-        \medskip\end{minipage}\\
-        \hline
-        \multicolumn{1}{|c|}{\textbf\texttt{\OutputFileName}}\\%
-        \hline
-        \begin{minipage}[t]{\exmpwidewid}\rightskip=0pt plus 1fill\relax
-        ##2    
-        \medskip\end{minipage}\\%
-        \hline
-        \end{tabular}
-    }
-    \newcommand{\exmpfile}[2]{
-       \exmp{
-          \verbatiminput{##1}
-       }{
-          \verbatiminput{##2}
-       }%
-    }
-}{
+    \begin{center}\begin{tabular}{|l|l|}
+            \hline
+            \multicolumn{1}{|c|}{\textbf{\InputFileName}} &
+            \multicolumn{1}{|c|}{\textbf{\OutputFileName}}\cr
+            \hline
+            }{
+        \end{tabular}\end{center}
 }
 
 \newenvironment{examplethree}[1][]{
@@ -230,22 +205,22 @@
     }
 
     \newcommand{\exmpfile}[3]{
-       \exmp{
-          \verbatiminput{##1}
-       }{
-          \verbatiminput{##2}
-       }{
-          ##3
-       }%
+        \exmp{
+            \verbatiminput{##1}
+        }{
+            \verbatiminput{##2}
+        }{
+            ##3
+        }%
     }
-    \begin{tabular}{|l|l|l|}
-        \hline
-        \multicolumn{1}{|c|}{\textbf\texttt{\InputFileName}}&
-        \multicolumn{1}{|c|}{\textbf\texttt{\OutputFileName}}&
-        \multicolumn{1}{|c|}{\textbf\texttt{\expandafter\unexpanded{\expandafter\kwExampleNotes}}}\\
-        \hline
-}{
-    \end{tabular}
+    \begin{center}\begin{tabular}{|l|l|l|}
+            \hline
+            \multicolumn{1}{|c|}{\textbf{\InputFileName}}  &
+            \multicolumn{1}{|c|}{\textbf{\OutputFileName}} &
+            \multicolumn{1}{|c|}{\textbf\kwExampleNotes}\cr
+            \hline
+            }{
+        \end{tabular}\end{center}
 }
 
 % -- End of problem environment --

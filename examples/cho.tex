@@ -1,0 +1,49 @@
+\begin{problem}{cho}{1s}{256 MB}{stdin}{stdout}
+Sau nhiều năm, cuối cùng phù thủy Byteasar cũng tìm thấy văn bản lời cầu khấn triệu
+hồi Imp Nhị Phân Vĩ Đại để trả lời câu hỏi muôn thuở của nhân loại: Liệu P = NP?.
+
+Tuy nhiên, để hoàn thành nghi lễ, cần phải xướng tên đầy đủ của Imp, mà Byteasar
+chưa biết. Người ta chỉ biết rằng tên đầu tiên là một từ bao gồm đúng 100 ký tự. Đối
+với Imp nhị phân là tốt, đó chỉ là các ký tự 0 và 1.
+
+Byteasar có thể thử nghi lễ nhiều lần (nhưng không quá $222$ lần, sau đó cỗ máy giả kim
+cũ kỹ của cậu phải tạm dừng). Nếu cậu nói đúng tên Imp ít nhất một lần, nghi thức sẽ
+thành công và Internet toàn cầu sẽ thay đổi mãi mãi. Nhờ trực giác kỳ diệu của mình,
+sau mỗi lần đoán tên, Byteasar sẽ biết chính xác mình đoán đúng bao nhiêu ký tự trong
+tên Imp. Tuy nhiên, Imp rất thất thường, và thỉnh thoảng thay đổi tên riêng của mình.
+Chính xác hơn, sau mỗi lần xướng tên thất bại của Byteasar, Imp rút ngẫu nhiên (theo
+phân phối đều) số $k$ từ tập $0, 1, \dots, 99$. Nếu ký tự thứ $k$ được Byteasar nói đúng trong
+lần thử này, Imp sẽ ngay lập tức đảo ngược (0 thành 1 và 1 thành 0).
+
+Là người học việc của một phù thủy không may mắn, bạn phải giúp Byteasar đoán tên
+của Imp - hãy làm điều đó nhanh chóng, nếu không Byteasar tức giận có thể biến bạn
+thành hòn đá.
+
+\cpsec{Chi tiết cài đặt}
+
+Để có thể giải quyết vấn đề, cần thêm thư viện vào đầu của chương trình
+
+\mint{cpp}{#include "cho.h"}
+
+Thư viện cung cấp hàm:
+\mint{cpp}{int recytuj (const std::string& proba)}
+hoạt động như mô tả ở trên - nếu chuỗi proba giống với tên thật của Imp, chương trình
+của bạn thoát ngay lập tức và AC test này. Nếu không, hàm trả về một số (từ 0 đến 99)
+bằng số ký tự khớp với tên thật. Sau đó, nó chạy một đoạn mã sau:
+
+\begin{minted}{cpp}
+int k = rand() % 100;
+if(proba[k] == real_name[k])
+  flip(real_name[k]);
+\end{minted}
+
+Trong đó \verb|real_name| là tên (bí mật) của Imp và \verb|flip()| đảo bit k từ 0 thành 1 và ngược lại.
+Đối với mỗi truy vấn, đầu vào phải là một chuỗi có đúng 100 ký tự 0 hoặc 1. Ngoài ra
+bạn không thể gọi \texttt{recytuj()} nhiều hơn 222 lần.
+
+Nếu bạn vi phạm bất kỳ quy tắc nào trong số này, bạn sẽ bị WA.
+
+Tên Imp ban đầu được đặt ở đầu mỗi test.
+
+
+\end{problem}

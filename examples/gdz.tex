@@ -1,0 +1,44 @@
+\begin{problem}{gdz}{3s}{256 MiB}{stdin}{stdout}
+Đây là một bài toán tương tác.
+
+Byteasar có một hoán vị $(P_0, P_1, \dots,P_{n-1})$ của các số từ $0$ đến $n - 1$.
+
+Byteasar yêu cầu bạn đoán vị trí của số 1 trong hoán vị này. Để bạn không phải đoán một cách mù quáng, 
+Byteasar sẽ trả lời câu hỏi ”Ước số chung lớn nhất của hai số $P_i$ và $P_j$ là bao nhiêu?”
+
+Để không quá đơn giản, tối đa bạn có thể hỏi $\left \lfloor \frac{5n}{2} \right \rfloor$ câu hỏi. 
+Ngoài ra, Byteasar liên tục đưa ra các hoán vị mới, vì vậy bạn có thể phải trả lời nhiều lần.
+
+\cpsec{Tương tác}
+
+Bạn viết một chương trình giao tiếp với Byteasar bằng cách sử dụng thư viện \texttt{gdzlib.h}, 
+đầu tiên hãy dùng chỉ dẫn:
+
+\begin{minted}{cpp}
+#include "gdzlib.h"
+\end{minted}
+
+Thư viện này cung cấp các hàm sau:
+
+\begin{itemize}
+  \item \mint{cpp}{int GetN()} 
+  Trả về tham số $n \ (3 \le n \le 5 \times 10^5)$ hoặc $n = -1$. 
+  Nếu $n \le 3$ thì đó là độ dài hoán vị hiện tại. Nếu $n = -1$, nghĩa là Byteasar đã hết hoán vị.
+  \item \mint{cpp}{int Ask(int i, int j)}
+  Hỏi ước số chung lớn nhất của hai số $P_i$ và $P_j$ $(0 \le i, j < n, i \ne j)$.
+  Trong một test, hàm này được gọi tối đa $\left \lfloor \frac{5n}{2} \right \rfloor$ lần.
+  \item \mint{cpp}{void Answer(int x)}
+  Trả lời câu hỏi của Byteasar với $x$ là vị trí của số 1 trong hoán vị hiện tại.
+\end{itemize}
+
+Mỗi lần chạy chương trình của bạn bao gồm ít nhất một test. Chương trình phải bắt
+đầu bằng \texttt{GetN()} và kết thúc bằng \texttt{GetN()}. Sử dụng \texttt{Ask()} hoặc \texttt{Answer()}.
+
+Sau bộ test cuối cùng, \texttt{GetN()} trả về $-1$. Khi đó, bạn phải chấm dứt chương trình.
+
+Các test có thể có tham số $n$ khác nhau trong một lần chạy chương trình. Tuy nhiên, số
+lượng hoán vị trong quá trình thực hiện chương trình sẽ không vượt quá $5 \times 10^5$.
+
+Sử dụng bất kỳ hàm nào có đối số không hợp lệ sẽ bị Wrong Answer.
+
+\end{problem}
