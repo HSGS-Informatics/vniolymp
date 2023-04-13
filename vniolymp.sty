@@ -76,9 +76,8 @@
 \newcommand{\createsection}{\@newsection}
 
 \def\@newsection#1#2{\DeclareRobustCommand{#1}{
-        {\beforeproblemsectioncaption\noindent
-                \textsf{\textbf{#2}}}
-        \nopagebreak\par\afterproblemsectioncaption}
+    {\beforeproblemsectioncaption\noindent\problemsectionfont\textsf{\textbf{#2}}}
+    \nopagebreak\par\afterproblemsectioncaption}
 }
 
 \createsection{\Specification}{\kw@Specification}
@@ -97,7 +96,7 @@
 \newcommand{\cpsec}[1]{
     \beforeproblemsectioncaption\noindent
     \textsf{\textbf{#1}}
-\nopagebreak\par\afterproblemsectioncaption
+    \nopagebreak\par\afterproblemsectioncaption
 }
 
 % -- End of problem sections
